@@ -5,8 +5,8 @@ defmodule AdventOfCode2024.Solutions.Y24.Day01 do
     parsed_list =
       Input.read!(input)
       |> String.split("\n")
-      |> Enum.filter(fn x -> x != "" end)
-      |> Enum.map(fn x -> String.split(x, "\s\s\s") end)
+      |> Enum.filter(& &1 != "")
+      |> Enum.map(&String.split(&1, "\s\s\s"))
       |> Enum.map(fn [x, y] -> {Integer.parse(x), Integer.parse(y)} end)
 
     list_left = for {{x, _}, _} <- parsed_list, do: x
@@ -34,22 +34,14 @@ defmodule AdventOfCode2024.Solutions.Y24.Day01 do
 
     counts =
       list_left
-      |> Enum.map(fn x -> count_occurrences(list_right, x) end)
+      |> Enum.map(&count_occurrences(list_right, &1))
 
     List.zip([list_left, counts])
     |> Enum.map(fn {x, y} -> x * y end)
     |> Enum.sum()
   end
 
-  defp count_occurrences([], _) do
-    0
-  end
-
-  defp count_occurrences([elem | list], value) when elem == value do
-    count_occurrences(list, value) + 1
-  end
-
-  defp count_occurrences([_ | list], value) do
-    count_occurrences(list, value)
-  end
+  defp count_occurrences([], _), do: 0
+  defp count_occurrences([elem | list], value) when elem == value, do: count_occurrences(list, value) + 1
+  defp count_occurrences([_ | list], value), do: count_occurrences(list, value)
 end
