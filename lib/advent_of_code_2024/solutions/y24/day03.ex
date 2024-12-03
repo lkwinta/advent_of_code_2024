@@ -2,7 +2,7 @@ defmodule AdventOfCode2024.Solutions.Y24.Day03 do
   alias AoC.Input
 
   def parse(input, :part_one) do
-    Regex.scan(~r"mul\(\d{1,3},\d{1,3}\)", Input.read!(input))
+    Regex.scan(~r"mul\(\d{1,3},\d{1,3}\)", Input.read!(input), capture: :first)
     |> Enum.map(&parse_str/1)
   end
 
