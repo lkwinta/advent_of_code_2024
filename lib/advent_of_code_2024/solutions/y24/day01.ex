@@ -5,7 +5,7 @@ defmodule AdventOfCode2024.Solutions.Y24.Day01 do
     parsed_list =
       Input.read!(input)
       |> String.split("\n")
-      |> Enum.filter(& &1 != "")
+      |> Enum.filter(&(&1 != ""))
       |> Enum.map(&String.split(&1, "\s\s\s"))
       |> Enum.map(fn [x, y] -> {Integer.parse(x), Integer.parse(y)} end)
 
@@ -42,6 +42,9 @@ defmodule AdventOfCode2024.Solutions.Y24.Day01 do
   end
 
   defp count_occurrences([], _), do: 0
-  defp count_occurrences([elem | list], value) when elem == value, do: count_occurrences(list, value) + 1
+
+  defp count_occurrences([elem | list], value) when elem == value,
+    do: count_occurrences(list, value) + 1
+
   defp count_occurrences([_ | list], value), do: count_occurrences(list, value)
 end
