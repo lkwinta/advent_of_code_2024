@@ -13,11 +13,12 @@ defmodule AdventOfCode2024.Solutions.Y24.Day03 do
 
   defp parse_str(["don't()"]), do: :dont
   defp parse_str(["do()"]), do: :do
+
   defp parse_str([mul_expr]) do
     [[x], [y]] = Regex.scan(~r"\d+", mul_expr)
     {x, _} = Integer.parse(x)
     {y, _} = Integer.parse(y)
-    x*y
+    x * y
   end
 
   def part_one(problem) do
