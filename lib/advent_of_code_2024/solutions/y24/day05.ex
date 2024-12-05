@@ -18,7 +18,8 @@ defmodule AdventOfCode2024.Solutions.Y24.Day05 do
     updates = updates
     |> Enum.map(&String.split(&1, ","))
     |> Enum.map(&
-      &1 |> Enum.map(fn x -> elem(Integer.parse(x), 0) end)
+      &1
+      |> Enum.map(fn x -> elem(Integer.parse(x), 0) end)
     )
 
     {rules, updates}
@@ -27,12 +28,12 @@ defmodule AdventOfCode2024.Solutions.Y24.Day05 do
   def part_one(problem) do
     {rules, updates} = problem
     indices = updates
-    |> Enum.map(&check_update(&1 |> Enum.with_index(), rules, []))
+    |> Enum.map(&check_update(&1 |> Enum.with_index(), rules))
 
     Enum.zip(updates, indices)
-    |> Enum.filter(fn {_, {ind, _}} -> ind == true end)
+    |> Enum.filter(fn {_, ind} -> ind == true end)
     |> Enum.map(fn {update, _} ->
-      Enum.at(update, Integer.floor_div(length(update), 2))
+      Enum.at(update, div(length(update), 2))
     end)
     |> Enum.sum()
   end
@@ -40,38 +41,48 @@ defmodule AdventOfCode2024.Solutions.Y24.Day05 do
   def part_two(problem) do
     {rules, updates} = problem
     indices = updates
-    |> Enum.map(&check_update(&1 |> Enum.with_index(), rules, []))
-    |> IO.inspect(charlists: :as_lists)
+    |> Enum.map(&check_update(&1 |> Enum.with_index(), rules))
 
-    rules_map_succ = rules |> Enum.reduce(%{}, fn {x, y}, acc_map ->
-      Map.put(acc_map, x, [y | Map.get(acc_map, x, [])])
-    end) |> IO.inspect(charlists: :as_lists)
-
-    rules_map_pred = rules |> Enum.reduce(%{}, fn {x, y}, acc_map ->
-      Map.put(acc_map, y, [x | Map.get(acc_map, y, [])])
-    end) |> IO.inspect(charlists: :as_lists)
+    successors_map = rules |> Enum.reduce(%{}, fn {x, y}, map ->
+      map
+      |> Map.update(x, MapSet.new([y]), fn successor -> MapSet.put(successor, y) end)
+      |> Map.put_new(y, MapSet.new())
+    end)
 
     Enum.zip(updates, indices)
-    |> Enum.filter(fn {_, {ind, _}} -> ind == false end)
-    |> IO.inspect(charlists: :as_lists)
-    # |> Enum.map(fn {update, {_, incorrect}} ->
-    #   Enum.at(update, Integer.floor_div(length(update), 2))
-    # end)
-    # |> Enum.sum()
+    |> Enum.filter(fn {_, ind} -> ind == false end)
+    |> Enum.map(fn {update, _} -> fix(update, successors_map) end)
+    |> Enum.map(&Enum.at(&1, div(length(&1), 2)))
+    |> Enum.sum()
   end
 
-  # defp fix(update, incorrect)
+  defp fix([], _), do: []
+  defp fix([head | update], rules) do
+    successors = Map.fetch!(rules, head)
+    if update |> Enum.all?( &MapSet.member?(successors, &1)) do
+        [head | fix(update, rules)]
+    else
+      fix(insert_behind_successors(update, head, successors), rules)
+    end
+  end
 
-  defp check_update(_, [], []), do: {true, []}
-  defp check_update(_, [], incorrect), do: {false, Enum.uniq(incorrect)}
-  defp check_update(update, [{pre, aft} | rules], incorrect) do
-    {val_incorrect, ind_pre} = Enum.find(update, {:a, nil}, fn {val, _} -> val == pre end)
-    {_, ind_aft} = Enum.find(update, {:a, nil}, fn {val, _} -> val == aft end)
+  defp insert_behind_successors([head | update], el_to_insert, successors) do
+    if update |> Enum.all?(&MapSet.member?(successors, &1)) do
+        [head, el_to_insert | update]
+    else
+        [head | insert_behind_successors(update, el_to_insert, successors)]
+    end
+  end
+
+  defp check_update(_, []), do: true
+  defp check_update(update, [{pre, aft} | rules]) do
+    {_, ind_pre} = Enum.find(update, {:a, nil} ,fn {val, _} -> val == pre end)
+    {_, ind_aft} = Enum.find(update, {:a, nil} ,fn {val, _} -> val == aft end)
 
     if ind_aft == nil or ind_pre == nil or ind_pre < ind_aft do
-      check_update(update, rules, incorrect)
+      check_update(update, rules)
     else
-      check_update(update, rules, incorrect ++ [{pre, aft}])
+      false
     end
   end
 end
