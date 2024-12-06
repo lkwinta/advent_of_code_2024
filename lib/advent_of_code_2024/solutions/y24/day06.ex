@@ -45,7 +45,6 @@ defmodule AdventOfCode2024.Solutions.Y24.Day06 do
     obstacle_positions
     |> Task.async_stream(&check_loop(Map.put(grid, &1, ?#), starting_position, {-1, 0}, MapSet.new()), ordered: false)
     |> Stream.filter(&match?({:ok, true}, &1))
-    |> Enum.to_list()
     |> Enum.count()
   end
 
@@ -59,8 +58,7 @@ defmodule AdventOfCode2024.Solutions.Y24.Day06 do
 
     case Map.fetch(grid, {x + dx, y + dy}) do
       {:ok, ?#} ->
-        {dx, dy} = rotate({dx, dy})
-        make_move(grid, {x, y}, {dx, dy})
+        make_move(grid, {x, y}, rotate({dx, dy}))
 
       {:ok, chr} when chr == ?X or chr == ?. ->
         make_move(grid, {x + dx, y + dy}, {dx, dy})
@@ -78,8 +76,7 @@ defmodule AdventOfCode2024.Solutions.Y24.Day06 do
 
       case Map.fetch(grid, {x + dx, y + dy}) do
         {:ok, ?#} ->
-          {dx, dy} = rotate({dx, dy})
-          check_loop(grid, {x, y}, {dx, dy}, visited)
+          check_loop(grid, {x, y}, rotate({dx, dy}), visited)
 
         {:ok, ?.} ->
           check_loop(grid, {x + dx, y + dy}, {dx, dy}, visited)
