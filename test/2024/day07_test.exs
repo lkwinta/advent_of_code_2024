@@ -28,31 +28,31 @@ defmodule AdventOfCode2024.Solutions.Y24.Day07Test do
     assert 3749 == solve(input, :part_one)
   end
 
-  # @part_one_solution 3119088655389
+  @part_one_solution 3119088655389
 
-  # test "part one solution" do
-  #   assert {:ok, @part_one_solution} == AoC.run(2024, 7, :part_one)
-  # end
+  test "part one solution" do
+    assert {:ok, @part_one_solution} == AoC.run(2024, 7, :part_one)
+  end
 
-  # test "part two example" do
-  #   input = ~S"""
-  #   190: 10 19
-  #   3267: 81 40 27
-  #   83: 17 5
-  #   156: 15 6
-  #   7290: 6 8 6 15
-  #   161011: 16 10 13
-  #   192: 17 8 14
-  #   21037: 9 7 18 13
-  #   292: 11 6 16 20
-  #   """
+  test "part two example" do
+    input = ~S"""
+    190: 10 19
+    3267: 81 40 27
+    83: 17 5
+    156: 15 6
+    7290: 6 8 6 15
+    161011: 16 10 13
+    192: 17 8 14
+    21037: 9 7 18 13
+    292: 11 6 16 20
+    """
 
-  #   assert 11387 == solve(input, :part_two)
-  # end
+    assert 11387 == solve(input, :part_two)
+  end
 
-  # @part_two_solution 264184041398847
+  @part_two_solution 264184041398847
 
-  # test "part two solution" do
-  #   assert {:ok, @part_two_solution} == AoC.run(2024, 7, :part_two)
-  # end
+  test "part two solution" do
+    assert {:ok, @part_two_solution} == AoC.run(2024, 7, :part_two)
+  end
 end
