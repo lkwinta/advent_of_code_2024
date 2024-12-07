@@ -43,7 +43,10 @@ defmodule AdventOfCode2024.Solutions.Y24.Day06 do
       |> Enum.map(&elem(&1, 0))
 
     obstacle_positions
-    |> Task.async_stream(&check_loop(Map.put(grid, &1, ?#), starting_position, {-1, 0}, MapSet.new()), ordered: false)
+    |> Task.async_stream(
+      &check_loop(Map.put(grid, &1, ?#), starting_position, {-1, 0}, MapSet.new()),
+      ordered: false
+    )
     |> Stream.filter(&match?({:ok, true}, &1))
     |> Enum.count()
   end
