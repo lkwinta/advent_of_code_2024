@@ -44,9 +44,9 @@ defmodule AdventOfCode2024.Solutions.Y24.Day02Test do
     assert 4 == solve(input, :part_two)
   end
 
-  # @part_two_solution CHANGE_ME
-  #
-  # test "part two solution" do
-  #   assert {:ok, @part_two_solution} == AoC.run(2024, 2, :part_two)
-  # end
+  @part_two_solution 439
+
+  test "part two solution" do
+    assert {:ok, @part_two_solution} == AoC.run(2024, 2, :part_two)
+  end
 end

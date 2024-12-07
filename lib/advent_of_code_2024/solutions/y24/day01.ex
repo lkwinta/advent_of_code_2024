@@ -4,7 +4,7 @@ defmodule AdventOfCode2024.Solutions.Y24.Day01 do
   def parse(input, _part) do
     parsed_list =
       Input.read!(input)
-      |> String.split("\n")
+      |> String.split(~r"\r\n|\r|\n")
       |> Enum.filter(&(&1 != ""))
       |> Enum.map(&String.split(&1, "\s\s\s"))
       |> Enum.map(fn [x, y] -> {Integer.parse(x), Integer.parse(y)} end)

@@ -4,7 +4,7 @@ defmodule AdventOfCode2024.Solutions.Y24.Day05 do
   def parse(input, _part) do
     [rules, updates] =
       Input.read!(input)
-      |> String.split("\n")
+      |> String.split(~r"\r\n|\r|\n")
       |> Enum.chunk_by(&(&1 == ""))
       |> Enum.filter(&(&1 != [""]))
 

@@ -3,7 +3,7 @@ defmodule AdventOfCode2024.Solutions.Y24.Day02 do
 
   def parse(input, _part) do
     Input.read!(input)
-    |> String.split("\n")
+    |> String.split(~r"\r\n|\r|\n")
     |> Enum.filter(&(&1 != ""))
     |> Enum.map(&String.split(&1, " "))
     |> Enum.map(fn x ->
