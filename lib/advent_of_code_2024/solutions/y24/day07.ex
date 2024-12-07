@@ -40,10 +40,8 @@ defmodule AdventOfCode2024.Solutions.Y24.Day07 do
   defp check_operators_extended({sum, [value]}), do: sum == value
   defp check_operators_extended({sum, [value | _]}) when sum < value, do: false
   defp check_operators_extended({sum, [a, b | values]}) do
-    {concat, _} = Integer.parse(to_string(a) <> to_string(b))
-
     check_operators_extended({sum, [a * b | values]}) or
       check_operators_extended({sum, [a + b | values]}) or
-      check_operators_extended({sum, [concat | values]})
+      check_operators_extended({sum, [10 ** length(Integer.digits(b)) * a + b | values]})
   end
 end
