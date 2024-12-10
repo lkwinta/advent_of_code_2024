@@ -34,11 +34,13 @@ defmodule AdventOfCode2024.Solutions.Y24.Day07 do
 
   defp check_operators({sum, [value]}), do: sum == value
   defp check_operators({sum, [value | _]}) when sum < value, do: false
+
   defp check_operators({sum, [a, b | values]}),
     do: check_operators({sum, [a * b | values]}) or check_operators({sum, [a + b | values]})
 
   defp check_operators_extended({sum, [value]}), do: sum == value
   defp check_operators_extended({sum, [value | _]}) when sum < value, do: false
+
   defp check_operators_extended({sum, [a, b | values]}) do
     check_operators_extended({sum, [a * b | values]}) or
       check_operators_extended({sum, [a + b | values]}) or
