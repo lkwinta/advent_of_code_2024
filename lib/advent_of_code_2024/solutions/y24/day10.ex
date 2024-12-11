@@ -17,21 +17,23 @@ defmodule AdventOfCode2024.Solutions.Y24.Day10 do
   end
 
   def part_one(problem) do
-    trailheads = problem
-    |> Stream.filter(fn {_, value} -> value == ?0 end)
-    |> Stream.map(&elem(&1, 0))
-    |> Enum.to_list()
+    trailheads =
+      problem
+      |> Stream.filter(fn {_, value} -> value == ?0 end)
+      |> Stream.map(&elem(&1, 0))
+      |> Enum.to_list()
 
     trailheads
-    |> Enum.map(&find_trails(&1, problem, ?0 - 1) |> Enum.uniq() |> Enum.count())
+    |> Enum.map(&(find_trails(&1, problem, ?0 - 1) |> Enum.uniq() |> Enum.count()))
     |> Enum.sum()
   end
 
   def part_two(problem) do
-    trailheads = problem
-    |> Stream.filter(fn {_, value} -> value == ?0 end)
-    |> Stream.map(&elem(&1, 0))
-    |> Enum.to_list()
+    trailheads =
+      problem
+      |> Stream.filter(fn {_, value} -> value == ?0 end)
+      |> Stream.map(&elem(&1, 0))
+      |> Enum.to_list()
 
     trailheads
     |> Enum.map(&count_trails(&1, problem, ?0 - 1))
@@ -39,27 +41,38 @@ defmodule AdventOfCode2024.Solutions.Y24.Day10 do
   end
 
   defp find_trails(position, map, _) when not is_map_key(map, position), do: []
-  defp find_trails(position, map, height) when :erlang.map_get(position, map) == ?9 and height == ?8, do: [position]
-  defp find_trails({x, y}, map, prev_height) when :erlang.map_get({x, y}, map) == prev_height + 1 do
+
+  defp find_trails(position, map, height)
+       when :erlang.map_get(position, map) == ?9 and height == ?8,
+       do: [position]
+
+  defp find_trails({x, y}, map, prev_height)
+       when :erlang.map_get({x, y}, map) == prev_height + 1 do
     height = map[{x, y}]
 
     find_trails({x + 1, y}, map, height) ++
-    find_trails({x - 1, y}, map, height) ++
-    find_trails({x, y + 1}, map, height) ++
-    find_trails({x, y - 1}, map, height)
+      find_trails({x - 1, y}, map, height) ++
+      find_trails({x, y + 1}, map, height) ++
+      find_trails({x, y - 1}, map, height)
   end
+
   defp find_trails(_, _, _), do: []
 
   defp count_trails(position, map, _) when not is_map_key(map, position), do: 0
-  defp count_trails(position, map, height) when :erlang.map_get(position, map) == ?9 and height == ?8, do: 1
-  defp count_trails({x, y}, map, prev_height) when :erlang.map_get({x, y}, map) == prev_height + 1 do
+
+  defp count_trails(position, map, height)
+       when :erlang.map_get(position, map) == ?9 and height == ?8,
+       do: 1
+
+  defp count_trails({x, y}, map, prev_height)
+       when :erlang.map_get({x, y}, map) == prev_height + 1 do
     height = map[{x, y}]
 
     count_trails({x + 1, y}, map, height) +
-    count_trails({x - 1, y}, map, height) +
-    count_trails({x, y + 1}, map, height) +
-    count_trails({x, y - 1}, map, height)
+      count_trails({x - 1, y}, map, height) +
+      count_trails({x, y + 1}, map, height) +
+      count_trails({x, y - 1}, map, height)
   end
-  defp count_trails(_, _, _), do: 0
 
+  defp count_trails(_, _, _), do: 0
 end

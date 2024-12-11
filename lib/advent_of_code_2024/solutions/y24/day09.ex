@@ -15,7 +15,7 @@ defmodule AdventOfCode2024.Solutions.Y24.Day09 do
   end
 
   def part_one(_problem) do
-    #indices = for i <- 0..length(Map.keys(problem)), do: i |> IO.inspect()
+    # indices = for i <- 0..length(Map.keys(problem)), do: i |> IO.inspect()
   end
 
   # def part_two(problem) do
