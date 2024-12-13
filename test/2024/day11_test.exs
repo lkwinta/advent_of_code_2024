@@ -20,7 +20,7 @@ defmodule AdventOfCode2024.Solutions.Y24.Day11Test do
     assert 55312 == solve(input, :part_one)
   end
 
-  @part_one_solution 191690
+  @part_one_solution 191_690
 
   test "part one solution" do
     assert {:ok, @part_one_solution} == AoC.run(2024, 11, :part_one)
@@ -38,9 +38,9 @@ defmodule AdventOfCode2024.Solutions.Y24.Day11Test do
   #   assert CHANGE_ME == solve(input, :part_two)
   # end
 
-  # @part_two_solution CHANGE_ME
-  #
-  # test "part two solution" do
-  #   assert {:ok, @part_two_solution} == AoC.run(2024, 11, :part_two)
-  # end
+  @part_two_solution 228_651_922_369_703
+
+  test "part two solution" do
+    assert {:ok, @part_two_solution} == AoC.run(2024, 11, :part_two)
+  end
 end
