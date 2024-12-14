@@ -124,7 +124,7 @@ defmodule AdventOfCode2024.Solutions.Y24.Day12Test do
   end
 
   # @part_two_solution CHANGE_ME
-  #
+
   # test "part two solution" do
   #   assert {:ok, @part_two_solution} == AoC.run(2024, 12, :part_two)
   # end

@@ -34,11 +34,11 @@ defmodule AdventOfCode2024.Solutions.Y24.Day13Test do
     assert 480 == solve(input, :part_one)
   end
 
-  # @part_one_solution CHANGE_ME
-  #
-  # test "part one solution" do
-  #   assert {:ok, @part_one_solution} == AoC.run(2024, 13, :part_one)
-  # end
+  @part_one_solution 26810
+
+  test "part one solution" do
+    assert {:ok, @part_one_solution} == AoC.run(2024, 13, :part_one)
+  end
 
   # test "part two example" do
   #   input = ~S"""
@@ -52,9 +52,9 @@ defmodule AdventOfCode2024.Solutions.Y24.Day13Test do
   #   assert CHANGE_ME == solve(input, :part_two)
   # end
 
-  # @part_two_solution CHANGE_ME
-  #
-  # test "part two solution" do
-  #   assert {:ok, @part_two_solution} == AoC.run(2024, 13, :part_two)
-  # end
+  @part_two_solution 108713182988244
+
+  test "part two solution" do
+    assert {:ok, @part_two_solution} == AoC.run(2024, 13, :part_two)
+  end
 end

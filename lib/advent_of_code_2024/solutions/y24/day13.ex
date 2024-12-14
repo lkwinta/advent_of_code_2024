@@ -28,11 +28,12 @@ defmodule AdventOfCode2024.Solutions.Y24.Day13 do
     {xP, _} = Integer.parse(map_prize["X"])
     {yP, _} = Integer.parse(map_prize["Y"])
 
-    {xP, yP} = if part == :part_two do
-      {xP + 10000000000000, yP + 10000000000000}
-    else
-      {xP, yP}
-    end
+    {xP, yP} =
+      if part == :part_two do
+        {xP + 10_000_000_000_000, yP + 10_000_000_000_000}
+      else
+        {xP, yP}
+      end
 
     %ClawMachine{
       button_A: {xA, yA},
@@ -46,45 +47,50 @@ defmodule AdventOfCode2024.Solutions.Y24.Day13 do
     |> Stream.map(&find_minimum_cost/1)
     |> Stream.filter(fn {n, k} ->
       0 <= n and n <= 100 and
-      0 <= k and k <= 100 and
-      :math.floor(n) - n == 0.0 and
-      :math.floor(k) - k == 0.0
+        0 <= k and k <= 100 and
+        :math.floor(n) - n == 0.0 and
+        :math.floor(k) - k == 0.0
     end)
-    |> Stream.map(fn {n, k} -> 3*n + k end)
+    |> Stream.map(fn {n, k} -> 3 * n + k end)
     |> Enum.sum()
     |> trunc()
   end
-
 
   def part_two(problem) do
     problem
     |> Stream.map(&find_minimum_cost/1)
     |> Stream.filter(fn {n, k} ->
       0 <= n and
-      0 <= k and
-      :math.floor(n) - n == 0.0 and
-      :math.floor(k) - k == 0.0
+        0 <= k and
+        :math.floor(n) - n == 0.0 and
+        :math.floor(k) - k == 0.0
     end)
-    |> Stream.map(fn {n, k} -> 3*n + k end)
+    |> Stream.map(fn {n, k} -> 3 * n + k end)
     |> Enum.sum()
     |> trunc()
   end
 
-  defp find_minimum_cost(%ClawMachine{button_A: {xA, yA}, button_B: {xB, yB}, prize_position: {xP, yP}}) do
-    w = xA*yB - xB*yA
-    wn = xP*yB - yP*xB
-    wk = xA*yP - yA*xP
+  defp find_minimum_cost(%ClawMachine{
+         button_A: {xA, yA},
+         button_B: {xB, yB},
+         prize_position: {xP, yP}
+       }) do
+    w = xA * yB - xB * yA
+    wn = xP * yB - yP * xB
+    wk = xA * yP - yA * xP
 
     cond do
       w != 0 ->
-        n = wn/w
-        k = wk/w
+        n = wn / w
+        k = wk / w
 
         {n, k}
+
       w == 0 and wn == 0 and wk == 0 ->
         IO.puts("Singularity")
-      true -> {0, 0}
+
+      true ->
+        {0, 0}
     end
   end
-
 end
